@@ -51,7 +51,7 @@ SELECT species, AVG(escape_attempts) AS avg_escapes FROM animals WHERE species =
 SELECT animals.name AS animal_name, owners.fullname AS owner FROM animals JOIN owners  ON animals.owner_id = owners.id WHERE owners.fullname = 'Melody Pond';
 
 -- Pokemon type animals
-SELECT animals.name AS animal_name, species.name FROM animals JOIN species ON animals.species_id = species.id WHERE species.name = 'Pokemon';
+SELECT animals.name AS animal_name, species.name AS species FROM animals JOIN species ON animals.species_id = species.id WHERE species.name = 'Pokemon';
 
 -- All owners and their animals
 SELECT owners.fullname AS owner, animals.name AS animal_name FROM animals RIGHT JOIN owners ON owners.id = animals.owner_id;
@@ -60,11 +60,11 @@ SELECT owners.fullname AS owner, animals.name AS animal_name FROM animals RIGHT 
 SELECT species.name AS species, COUNT(animals.species_id) AS num FROM species  JOIN animals ON animals.species_id = species.id GROUP BY animals.species_id, species.name;
 
 -- All Digimon owned by Jennifer Orwell.
-SELECT owners.fullname AS owner, COUNT(animals.owner_id) AS digimon_count FROM owners JOIN animals ON owners.id = animals.owner_id WHERE owners.id = 2 AND animals.species_id = 2 GROUP BY owners.fullname, animals.owner_id;
+SELECT owners.fullname AS owner, animals.name, COUNT(animals.owner_id) AS digimon_count FROM owners JOIN animals ON owners.id = animals.owner_id WHERE owners.id = 2 AND animals.species_id = 2 GROUP BY owners.fullname, animals.owner_id, animals.name;
 
 -- List all animals owned by Dean Winchester that haven't tried to escape.
 SELECT animals.name AS no_escape_attempts, owners.fullname AS owner FROM animals JOIN owners ON animals.owner_id =  owners.id WHERE animals.owner_id = 5 AND animals.escape_attempts = 0 GROUP by owners.fullname, animals.name;
 
 -- Who owns the most animals
-SELECT  owners.fullname AS owner_name, MAX(animals.owner_id) AS owner_id FROM animals JOIN owners ON animals.owner_id = owners.id WHERE animals.owner_id = owners.id GROUP BY owners.fullname, animals.owner_id; 
+SELECT  owners.fullname AS owner_name, COUNT(animals.owner_id) AS owner_id FROM animals JOIN owners ON animals.owner_id = owners.id WHERE animals.owner_id = owners.id GROUP BY owners.fullname, animals.owner_id ORDER BY owner_id DESC LIMIT 1; 
 
