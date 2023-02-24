@@ -12,3 +12,23 @@ INSERT INTO animals (name, date_of_birth, escape_attempts, neutered, weight_kg) 
 INSERT INTO animals (name, date_of_birth, escape_attempts, neutered, weight_kg) VALUES ('Boarmon', '7/06/2005', 7, true,  20.4);
 INSERT INTO animals (name, date_of_birth, escape_attempts, neutered, weight_kg) VALUES ('Blossom', '13/10/1998', 3, true,  17);
 INSERT INTO animals (name, date_of_birth, escape_attempts, neutered, weight_kg) VALUES ('Ditto', '14/05/2022', 4, true,  22);
+
+
+INSERT INTO owners VALUES ('Sam Smith', 34);
+INSERT INTO owners VALUES ('Jennifer Orwell', 19);
+INSERT INTO owners VALUES ('Bob', 45);
+INSERT INTO owners VALUES ('Melody Pond', 77);
+INSERT INTO owners VALUES ('Dean Winchester', 14);
+INSERT INTO owners VALUES ('Jodie Whittaker', 38);
+
+INSERT INTO species VALUES('Pokemon');
+INSERT INTO species VALUES('Digimon');
+
+UPDATE animalS SET owner_id = 1 WHERE name = 'Agumon';
+UPDATE animalS SET owner_id = 2 WHERE name = 'Gabumon' OR name = 'Pikachu';
+UPDATE animalS SET owner_id = 3 WHERE name = 'Devimon' OR name = 'Plantmon';
+UPDATE animalS SET owner_id = 4 WHERE name = 'Charmander' OR name = 'Squirtle' OR name = 'Blossom';
+UPDATE animalS SET owner_id = 5 WHERE name = 'Angemon' OR name = 'Boarmon';
+
+UPDATE animalS SET species_id = 2 WHERE name LIKE '%mon';
+UPDATE animalS SET species_id = 1 WHERE species_id IS NULL;
