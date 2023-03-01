@@ -182,6 +182,12 @@ run on a newly created database.
 - Twitter: [@_mikeamponsah](https://twitter.com/_mikeamponsah)
 - LinkedIn: [michaelamponsah](https://linkedin.com/in/mikeamponsah)
 
+👤 **Alex Osoro Ogeto**
+
+- GitHub: [@githubhandle](https://github.com/Osoro254Alex)
+- Twitter: [@twitterhandle](https://twitter.com/ALEX14809153)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/alexogeto/)
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- FUTURE FEATURES -->

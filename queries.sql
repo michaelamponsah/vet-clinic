@@ -37,48 +37,98 @@ SELECT COUNT(id) FROM animals;
 SELECT COUNT(id) FROM animals WHERE escape_attempts = 1;
 SELECT AVG(weight_kg) FROM animals;
 
-SELECT id, name, escape_attempts FROM animals WHERE escape_attempts = (SELECT MAX(escape_attempts) FROM animals);
-SELECT species, weight_kg AS max_weight FROM animals WHERE species = 'digimon' AND weight_kg = (SELECT MAX(weight_kg) FROM animals WHERE species = 'digimon');
-SELECT species, weight_kg AS min_weight FROM animals WHERE species = 'digimon' AND weight_kg = (SELECT MIN(weight_kg) FROM animals WHERE species = 'digimon');
+SELECT id, name, escape_attempts FROM animals 
+  WHERE escape_attempts = (SELECT MAX(escape_attempts) FROM animals);
 
-SELECT species, weight_kg AS max_weight FROM animals WHERE species = 'pokemon' AND weight_kg = (SELECT MAX(weight_kg) FROM animals WHERE species = 'pokemon');
-SELECT species, weight_kg AS min_weight FROM animals WHERE species = 'pokemon' AND weight_kg = (SELECT MIN(weight_kg) FROM animals WHERE species = 'pokemon');
+SELECT species, weight_kg AS max_weight FROM animals 
+  WHERE species = 'digimon' 
+  AND weight_kg = (SELECT MAX(weight_kg) FROM animals WHERE species = 'digimon');
 
-SELECT species, AVG(escape_attempts) AS avg_escapes FROM animals WHERE species = 'digimon' AND date_of_birth BETWEEN '01/01/1990' AND '31/12/2000' GROUP BY species;
-SELECT species, AVG(escape_attempts) AS avg_escapes FROM animals WHERE species = 'pokemon' AND date_of_birth BETWEEN '01/01/1990' AND '31/12/2000' GROUP BY species;
+SELECT species, weight_kg AS min_weight FROM animals
+  WHERE species = 'digimon' 
+  AND weight_kg = (SELECT MIN(weight_kg) FROM animals WHERE species = 'digimon');
+
+SELECT species, weight_kg AS max_weight FROM animals 
+  WHERE species = 'pokemon' 
+  AND weight_kg = (SELECT MAX(weight_kg) FROM animals WHERE species = 'pokemon');
+
+SELECT species, weight_kg AS min_weight FROM animals
+  WHERE species = 'pokemon' 
+  AND weight_kg = (SELECT MIN(weight_kg) FROM animals WHERE species = 'pokemon');
+
+SELECT species, AVG(escape_attempts) AS avg_escapes FROM animals
+  WHERE species = 'digimon'
+  AND date_of_birth 
+  BETWEEN '01/01/1990' AND '31/12/2000' 
+  GROUP BY species;
+
+SELECT species, AVG(escape_attempts) AS avg_escapes FROM animals
+  WHERE species = 'pokemon' 
+  AND date_of_birth 
+  BETWEEN '01/01/1990' AND '31/12/2000'
+  GROUP BY species;
 
 -- Animals that belong to Melody Pond;
-SELECT animals.name AS animal_name, owners.fullname AS owner FROM animals JOIN owners  ON animals.owner_id = owners.id WHERE owners.fullname = 'Melody Pond';
+SELECT animals.name AS animal_name, owners.fullname AS owner FROM animals
+  JOIN owners  ON animals.owner_id = owners.id
+  WHERE owners.fullname = 'Melody Pond';
 
 -- Pokemon type animals
-SELECT animals.name AS animal_name, species.name AS species FROM animals JOIN species ON animals.species_id = species.id WHERE species.name = 'Pokemon';
+SELECT animals.name AS animal_name, species.name AS species FROM animals
+  JOIN species ON animals.species_id = species.id
+  WHERE species.name = 'Pokemon';
 
 -- All owners and their animals
-SELECT owners.fullname AS owner, animals.name AS animal_name FROM animals RIGHT JOIN owners ON owners.id = animals.owner_id;
+SELECT owners.fullname AS owner, animals.name AS animal_name FROM animals
+  RIGHT JOIN owners ON owners.id = animals.owner_id;
 
 --Animals per species
-SELECT species.name AS species, COUNT(animals.species_id) AS num FROM species  JOIN animals ON animals.species_id = species.id GROUP BY animals.species_id, species.name;
+SELECT species.name AS species, COUNT(animals.species_id) AS num FROM species
+  JOIN animals ON animals.species_id = species.id
+  GROUP BY animals.species_id, species.name;
 
 -- All Digimon owned by Jennifer Orwell.
-SELECT owners.fullname AS owner, animals.name, COUNT(animals.owner_id) AS digimon_count FROM owners JOIN animals ON owners.id = animals.owner_id WHERE owners.id = 2 AND animals.species_id = 2 GROUP BY owners.fullname, animals.owner_id, animals.name;
+SELECT owners.fullname AS owner, animals.name, COUNT(animals.owner_id) AS digimon_count FROM owners 
+  JOIN animals ON owners.id = animals.owner_id 
+  WHERE owners.id = 2 AND animals.species_id = 2 
+  GROUP BY owners.fullname, animals.owner_id, animals.name;
 
 -- List all animals owned by Dean Winchester that haven't tried to escape.
-SELECT animals.name AS no_escape_attempts, owners.fullname AS owner FROM animals JOIN owners ON animals.owner_id =  owners.id WHERE animals.owner_id = 5 AND animals.escape_attempts = 0 GROUP by owners.fullname, animals.name;
+SELECT animals.name AS no_escape_attempts, owners.fullname AS owner FROM animals 
+  JOIN owners ON animals.owner_id =  owners.id 
+  WHERE animals.owner_id = 5 AND animals.escape_attempts = 0 
+  GROUP by owners.fullname, animals.name;
 
 -- Who owns the most animals
-SELECT  owners.fullname AS owner_name, COUNT(animals.owner_id) AS owner_id FROM animals JOIN owners ON animals.owner_id = owners.id WHERE animals.owner_id = owners.id GROUP BY owners.fullname, animals.owner_id ORDER BY owner_id DESC LIMIT 1; 
+SELECT  owners.fullname AS owner_name, COUNT(animals.owner_id) AS owner_id FROM animals 
+  JOIN owners ON animals.owner_id = owners.id
+  WHERE animals.owner_id = owners.id 
+  GROUP BY owners.fullname, animals.owner_id 
+  ORDER BY owner_id DESC LIMIT 1; 
 
 -- Last animal seen by William Tatcher
-SELECT animals.name AS animal_name, visits.date_of_visit FROM animals JOIN visits ON animals.id = visits.animal_id WHERE visits.vet_id = 1 GROUP BY animals.name, visits.date_of_visit ORDER BY date_of_visit DESC LIMIT 1; 
+SELECT animals.name AS animal_name, visits.date_of_visit FROM animals 
+  JOIN visits ON animals.id = visits.animal_id 
+  WHERE visits.vet_id = 1 GROUP BY animals.name, visits.date_of_visit 
+  ORDER BY date_of_visit DESC LIMIT 1; 
 
 -- How many diff animals did Stephanie see
-SELECT vets.name as vet_name, COUNT(visits.animal_id) AS animal_count FROM visits JOIN vets ON visits.vet_id = vets.id WHERE vets.name = 'Stephanie Mendez' GROUP BY vets.name;
+SELECT vets.name as vet_name, COUNT(visits.animal_id) AS animal_count FROM visits
+  JOIN vets ON visits.vet_id = vets.id 
+  WHERE vets.name = 'Stephanie Mendez' GROUP BY vets.name;
 
 -- All vets and specialities
-SELECT vets.name AS vet_name, species.name AS specialization FROM vets LEFT JOIN specialization ON vets.id = specialization.vet_id LEFT JOIN species ON species.id = specialization.species_id;
+SELECT vets.name AS vet_name, species.name AS specialization FROM vets 
+  LEFT JOIN specialization ON vets.id = specialization.vet_id 
+  LEFT JOIN species ON species.id = specialization.species_id;
 
 -- All animals that visited Stephanie Mendez between April 1st and August 30th, 2020.
-SELECT vets.name AS vet_name, animals.name AS animal_name FROM vets INNER JOIN visits ON vets.id = visits.vet_id  JOIN animals ON animals.id = visits.animal_id WHERE vets.name = 'Stephanie Mendez' AND visits.date_of_visit BETWEEN '01/04/2020' AND '30/08/2020' GROUP BY vet_name, animal_name;
+SELECT vets.name AS vet_name, animals.name AS animal_name FROM vets 
+  INNER JOIN visits ON vets.id = visits.vet_id 
+  JOIN animals ON animals.id = visits.animal_id 
+  WHERE vets.name = 'Stephanie Mendez' AND visits.date_of_visit 
+  BETWEEN '01/04/2020' AND '30/08/2020' 
+  GROUP BY vet_name, animal_name;
 
 -- Animal with most visits
 SELECT animals.name, count(*) FROM animals
@@ -114,3 +164,8 @@ SELECT vets.name, species.name, count(species.name) from vets
   WHERE vets.name = 'Maisy Smith' 
   GROUP BY species.name, vets.name 
   ORDER BY count DESC lIMIT 1;
+
+  -- Performance audit queries
+SELECT COUNT(*) FROM visits where animal_id = 4;
+SELECT * FROM visits where vet_id = 2;
+SELECT * FROM owners where email = 'owner_18327@mail.com';

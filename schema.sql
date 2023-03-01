@@ -35,3 +35,17 @@ CREATE TABLE animals (
 CREATE TABLE vets( id SERIAL PRIMARY KEY, name VARCHAR(250), age INT, date_of_graduation DATE );
 CREATE TABLE specialization (id SERIAL PRIMARY KEY, species_id INT, vet_id INT, CONSTRAINT fk_species_id FOREIGN KEY(species_id) REFERENCES species(id), CONSTRAINT fk_vet_id  FOREIGN KEY(vet_id) REFERENCES vets(id));
 CREATE TABLE visits (id SERIAL PRIMARY KEY, animal_id INT, vet_id INT, date_of_visit DATE, CONSTRAINT fk_animal_id FOREIGN KEY(animal_id) REFERENCES animals(id), CONSTRAINT fk_vet_id  FOREIGN KEY(vet_id) REFERENCES vets(id));
+
+
+-- Add an email column to your owners table
+ALTER TABLE owners ADD COLUMN email VARCHAR(120);
+
+-- Create a non clustered index of animal_id on visits table
+CREATE INDEX  animal_id_asc ON visits (animal_id ASC);
+
+-- Create a non clustered index of vet_id on visits table
+CREATE INDEX  vet_id_asc ON visits (vet_id ASC);
+
+-- Create a non clustered index of vet_id on visits table
+CREATE INDEX  owner_email_asc ON owners (email ASC);
+
